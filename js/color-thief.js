@@ -27,33 +27,14 @@ var iAmOnNode = false;
 var Canvas;
 var Image;
 var fs;
-if ( !!process && process.execPath ) {
-    iAmOnNode = true;
-}
-if (iAmOnNode) {
-  Canvas = require('canvas');
-  Image = Canvas.Image;
-  fs = require('fs');
-}
 
 var CanvasImage = function (image) {
     // in node we use strings as path to an image
     // whereas in the browser we use an image element
-    if (iAmOnNode) {
-      this.canvas = new Canvas()
-      var img = new Image;
 
-      if(image instanceof Buffer) {
-        img.src = image
-      }else{
-        img.src = fs.readFileSync(image);
-      }
-
-    } else {
-      this.canvas = document.createElement('canvas');
-      document.body.appendChild(this.canvas);
-      var img = image;
-    }
+    this.canvas = document.createElement('canvas');
+    document.body.appendChild(this.canvas);
+    var img = image;
     
     this.context = this.canvas.getContext('2d');
 
